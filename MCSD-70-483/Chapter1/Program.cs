@@ -1,21 +1,25 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Chapter1
 {
     public static class Program
     {
 
-
-
         public static void Main()
         {
-            ThreadPool.QueueUserWorkItem(s =>
+            Task t = Task.Run(()=>
             {
-                Console.WriteLine("Working on a Thread from Thread pool");
+                for(int x = 0; x < 10; x++)
+                {
+                    Console.WriteLine("*");
+                }
             });
+            
 
-            Console.ReadLine();
+            
+            t.Wait(); 
         }
     }
 }
