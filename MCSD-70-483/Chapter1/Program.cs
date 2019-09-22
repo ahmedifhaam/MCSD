@@ -6,24 +6,31 @@ namespace Chapter1
     public static class Program
     {
 
-        public static void ThreadMethod()
+        [ThreadStatic]
+        public static int _field;
+
+        public static void Main()
         {
-            for(int i = 0; i < 10; i++)
+
+            new Thread(() =>
             {
-                Console.WriteLine("Thread Proc {0}", i);
-                Thread.Sleep(1000);
-            }
+                for(int x = 0; x < 10; x++)
+                {
+                    _field++;
+                    Console.WriteLine("Thread A: {0}", _field);
+                }
+            }).Start();
 
-        }
-        /* public static void Main(string[] args)
-        {
-            Console.WriteLine("Hello World!");
-            Thread t = new Thread(new ThreadStart(ThreadMethod));
-            t.IsBackground = false;
-            t.Start();
+            new Thread(() =>
+            {
+                for (int x = 0; x < 10; x++)
+                {
+                    _field++;
+                    Console.WriteLine("Thread B: {0}", _field);
+                }
+            }).Start();
 
-            
+            Console.ReadKey();
         }
-        */
     }
 }

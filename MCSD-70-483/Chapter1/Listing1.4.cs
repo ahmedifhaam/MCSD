@@ -12,24 +12,24 @@ namespace Chapter1
             }
         }
 
-        public static void Main(String[] args)
-        {
-            bool stoped = false;
+        //public static void Main(String[] args)
+        //{
+        //    bool stoped = false;
 
-            Thread t = new Thread(new ThreadStart(() =>
-            {
-                while (!stoped)
-                {
-                    Console.WriteLine("Runnning ...");
-                    Thread.Sleep(1000);
-                }
-            }));
+        //    Thread t = new Thread(new ThreadStart(() =>
+        //    {
+        //        while (!stoped)
+        //        {
+        //            Console.WriteLine("Runnning ...");
+        //            Thread.Sleep(1000);
+        //        }
+        //    }));
 
-            t.Start();
-            Console.WriteLine("Press Any key to stop..");
-            Console.ReadKey();
-            stoped = true;
-            t.Join();
-        }
+        //    t.Start();
+        //    Console.WriteLine("Press Any key to stop..");
+        //    Console.ReadKey();
+        //    stoped = true;
+        //    t.Join();
+        //}
     }
 }
