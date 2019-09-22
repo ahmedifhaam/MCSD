@@ -11,7 +11,7 @@ namespace Chapter1
             for(int i = 0; i < 10; i++)
             {
                 Console.WriteLine("Thread Proc {0}", i);
-                Thread.Sleep(0);
+                Thread.Sleep(1000);
             }
 
         }
@@ -19,15 +19,10 @@ namespace Chapter1
         {
             //Console.WriteLine("Hello World!");
             Thread t = new Thread(new ThreadStart(ThreadMethod));
+            t.IsBackground = false;
             t.Start();
 
-            for(int i = 0; i < 4; i++)
-            {
-                Console.WriteLine("Main Thread : Do somework!!");
-                Thread.Sleep(0);
-            }
-
-            t.Join();
+            
         }
     }
 }
