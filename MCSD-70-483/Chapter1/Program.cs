@@ -6,8 +6,11 @@ namespace Chapter1
     public static class Program
     {
 
-        [ThreadStatic]
-        public static int _field;
+
+        public static ThreadLocal<int> _field = new ThreadLocal<int>(() =>
+        {
+            return Thread.CurrentThread.ManagedThreadId;
+        });
 
         public static void Main()
         {
@@ -16,8 +19,8 @@ namespace Chapter1
             {
                 for(int x = 0; x < 10; x++)
                 {
-                    _field++;
-                    Console.WriteLine("Thread A: {0}", _field);
+                    
+                    Console.WriteLine("Thread A: {0} ", _field.Value);
                 }
             }).Start();
 
@@ -25,8 +28,8 @@ namespace Chapter1
             {
                 for (int x = 0; x < 10; x++)
                 {
-                    _field++;
-                    Console.WriteLine("Thread B: {0}", _field);
+                    
+                    Console.WriteLine("Thread B: {0}", _field.Value);
                 }
             }).Start();
 
