@@ -9,18 +9,32 @@ namespace Chapter1
 
         public static void Main()
         {
-            Task<int> t = Task.Run(()=>
+            Task<Int32[]> parent = Task.Run(()=>
             {
-                for (int j = 0; j < 1000; j++) Console.Write(".");
-                return 42;
+                Int32[] results = new Int32[3];
+
+                new Task(() =>
+                {
+                    results[0] = 0;
+                },TaskCreationOptions.AttachedToParent).Start();
+                new Task(() =>
+                {
+                    results[1] = 1;
+                }, TaskCreationOptions.AttachedToParent).Start();
+                new Task(() =>
+                {
+                    results[2] = 2;
+                }, TaskCreationOptions.AttachedToParent).Start();
+
+                return results;
             });
 
-            //These two lines were added for testing pupose
-            //t.Wait();
-            //Console.WriteLine("Done");
+            Task finalTask = parent.ContinueWith(parentTask =>
+            {
+                foreach (int i in parentTask.Result) Console.WriteLine("Value {0}", i);
+            });
 
-
-            Console.WriteLine(t.Result); //seems like t.Result implicitly calls t.wait 
+            finalTask.Wait();
         }
     }
 }
