@@ -15,14 +15,15 @@ namespace Chapter1
             }
 
         }
-        public static void Main(string[] args)
+        /* public static void Main(string[] args)
         {
-            //Console.WriteLine("Hello World!");
+            Console.WriteLine("Hello World!");
             Thread t = new Thread(new ThreadStart(ThreadMethod));
             t.IsBackground = false;
             t.Start();
 
             
         }
+        */
     }
 }
