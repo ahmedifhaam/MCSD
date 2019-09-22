@@ -7,33 +7,15 @@ namespace Chapter1
     {
 
 
-        public static ThreadLocal<int> _field = new ThreadLocal<int>(() =>
-        {
-            return Thread.CurrentThread.ManagedThreadId;
-        });
 
         public static void Main()
         {
-
-            new Thread(() =>
+            ThreadPool.QueueUserWorkItem(s =>
             {
-                for(int x = 0; x < 10; x++)
-                {
-                    
-                    Console.WriteLine("Thread A: {0} ", _field.Value);
-                }
-            }).Start();
+                Console.WriteLine("Working on a Thread from Thread pool");
+            });
 
-            new Thread(() =>
-            {
-                for (int x = 0; x < 10; x++)
-                {
-                    
-                    Console.WriteLine("Thread B: {0}", _field.Value);
-                }
-            }).Start();
-
-            Console.ReadKey();
+            Console.ReadLine();
         }
     }
 }
