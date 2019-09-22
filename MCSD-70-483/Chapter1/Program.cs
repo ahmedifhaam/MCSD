@@ -9,17 +9,18 @@ namespace Chapter1
 
         public static void Main()
         {
-            Task t = Task.Run(()=>
+            Task<int> t = Task.Run(()=>
             {
-                for(int x = 0; x < 10; x++)
-                {
-                    Console.WriteLine("*");
-                }
+                for (int j = 0; j < 1000; j++) Console.Write(".");
+                return 42;
             });
-            
 
-            
-            t.Wait(); 
+            //These two lines were added for testing pupose
+            //t.Wait();
+            //Console.WriteLine("Done");
+
+
+            Console.WriteLine(t.Result); //seems like t.Result implicitly calls t.wait 
         }
     }
 }
