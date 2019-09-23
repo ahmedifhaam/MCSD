@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Chapter1
@@ -9,32 +10,18 @@ namespace Chapter1
 
         public static void Main()
         {
-            Task<Int32[]> parent = Task.Run(()=>
+            string result = DownloadContent().Result;
+            Console.Write(result);
+
+        }
+
+        public static async Task<String> DownloadContent()
+        {
+            using(HttpClient client = new HttpClient())
             {
-                Int32[] results = new Int32[3];
-
-                new Task(() =>
-                {
-                    results[0] = 0;
-                },TaskCreationOptions.AttachedToParent).Start();
-                new Task(() =>
-                {
-                    results[1] = 1;
-                }, TaskCreationOptions.AttachedToParent).Start();
-                new Task(() =>
-                {
-                    results[2] = 2;
-                }, TaskCreationOptions.AttachedToParent).Start();
-
-                return results;
-            });
-
-            Task finalTask = parent.ContinueWith(parentTask =>
-            {
-                foreach (int i in parentTask.Result) Console.WriteLine("Value {0}", i);
-            });
-
-            finalTask.Wait();
+                string result = await client.GetStringAsync("Http://www.microsoft.com");
+                return result;
+            }
         }
     }
 }
